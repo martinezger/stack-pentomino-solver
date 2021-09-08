@@ -39,7 +39,7 @@ pairs [] = []
 
 pairs xs = zip xs (tail xs)
 
-check_pairs figure_list = map (\ (x,y) -> check_figure_level_up x y) (pairs figure_list) k
+check_pairs figure_list = map (\ (x,y) -> check_figure_level_up x y) (pairs figure_list)
 
 stack_height figure_list = length (filter (\ x-> x == True) (check_pairs figure_list)) + 1
 
