@@ -55,15 +55,16 @@ playGame [] = do
 playGame (x:xs) = do
 
     (level, accum ) <- get    
-
-    let sum_x_accum = sum_figures x (head accum)
-    let level_counter = get_max_from sum_x_accum
     
-    let pile_higher = [(pile_up_figures x (head accum) level_counter)]
+    let    
+        sum_x_accum = sum_figures x (head accum)
+        level_counter = get_max_from sum_x_accum
+    
+        pile_higher = [(pile_up_figures x (head accum) level_counter)]
 
-    let when_lower = extract x (head accum)
-    let when_lower_level = get_max_from(when_lower)
-    let pile_lower = [(pile_up_figures x (head accum) when_lower_level)]
+        when_lower = extract x (head accum)
+        when_lower_level = get_max_from(when_lower)
+        pile_lower = [(pile_up_figures x (head accum) when_lower_level)]
 
     if level_counter > level then
         put (level_counter, pile_higher)
