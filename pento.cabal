@@ -33,6 +33,7 @@ library
   build-depends:
       base >=4.7 && <5
     , matrix
+    , mtl ==2.2.2
   default-language: Haskell2010
 
 executable pento-exe
@@ -45,6 +46,7 @@ executable pento-exe
   build-depends:
       base >=4.7 && <5
     , matrix
+    , mtl ==2.2.2
     , pento
   default-language: Haskell2010
 
@@ -59,5 +61,6 @@ test-suite pento-test
   build-depends:
       base >=4.7 && <5
     , matrix
+    , mtl ==2.2.2
     , pento
   default-language: Haskell2010

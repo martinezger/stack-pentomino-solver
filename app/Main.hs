@@ -1,24 +1,67 @@
 module Main where
 
 import Lib
-import Data.Matrix
+import Control.Monad.State
+
+
 
 -- Figures
 
-f = [[False,False,False,True,True],[False,False,True,True,False],[False,False,False,True,False],[False,False,False,False,False],[False,False,False,False,False]]
-i = [[False,False,False,False,True],[False,False,False,False,True],[False,False,False,False,True],[False,False,False,False,True],[False,False,False,False,True]]
-l = [[False,False,False,False,True],[False,False,False,False,True],[False,False,False,False,True],[False,False,False,True,True],[False,False,False,False,False]]
-n = [[False,False,False,False,True],[False,False,False,True,True],[False,False,False,True,False],[False,False,False,True,False],[False,False,False,False,False]]
-p = [[False,False,False,False,True],[False,False,False,True,True],[False,False,False,True,True],[False,False,False,False,False],[False,False,False,False,False]]
-t = [[False,False,True,True,True],[False,False,False,True,False],[False,False,False,True,False],[False,False,False,False,False],[False,False,False,False,False]]
-u = [[False,False,True,False,True],[False,False,True,True,True],[False,False,False,False,False],[False,False,False,False,False],[False,False,False,False,False]]
-v = [[False,False,False,False,True],[False,False,False,False,True],[False,False,True,True,True],[False,False,False,False,False],[False,False,False,False,False]]
-w = [[False,False,False,False,True],[False,False,False,True,True],[False,False,True,True,False],[False,False,False,False,False],[False,False,False,False,False]]
-x = [[False,False,False,True,False],[False,False,True,True,True],[False,False,False,True,False],[False,False,False,False,False],[False,False,False,False,False]]
-y = [[False,False,False,True,False],[False,False,False,True,True],[False,False,False,True,False],[False,False,False,True,False],[False,False,False,False,False]]
-z = [[False,False,True,True,False],[False,False,False,True,False],[False,False,False,True,True],[False,False,False,False,False],[False,False,False,False,False]]
+empty = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
 
-figure_set = [f, i, l, n, p, t, u, v, w, x, y, z]
+f = [[0,0,0,1,1],[0,0,1,1,0],[0,0,0,1,0],[0,0,0,0,0],[0,0,0,0,0]]
 
-main  = do 
-    print ("PENTONOMINO STACK SOLVER")
+i = [[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1]]
+
+l = [[0,0,0,0,1],[0,0,0,0,1],[0,0,0,0,1],[0,0,0,1,1],[0,0,0,0,0]]
+
+n = [[0,0,0,0,0],[0,0,0,0,1],[0,0,0,1,1],[0,0,0,1,0],[0,0,0,1,0]]
+
+p =[[0,0,0,0,1],[0,0,0,1,1],[0,0,0,1,1],[0,0,0,0,0],[0,0,0,0,0]]
+
+t = [[0,0,1,1,1],[0,0,0,1,0],[0,0,0,1,0],[0,0,0,0,0],[0,0,0,0,0]]
+
+u = [[0,0,1,0,1],[0,0,1,1,1],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+
+v = [[0,0,0,0,1],[0,0,0,0,1],[0,0,1,1,1],[0,0,0,0,0],[0,0,0,0,0]]
+
+w = [[0,0,0,0,1],[0,0,0,1,1],[0,0,1,1,0],[0,0,0,0,0],[0,0,0,0,0]]
+
+x = [[0,0,0,1,0],[0,0,1,1,1],[0,0,0,1,0],[0,0,0,0,0],[0,0,0,0,0]]
+
+y = [[0,0,0,1,0],[0,0,0,1,1],[0,0,0,1,0],[0,0,0,1,0],[0,0,0,0,0]]
+
+z = [[0,0,1,1,0],[0,0,0,1,0],[0,0,0,1,1],[0,0,0,0,0],[0,0,0,0,0]]
+
+test_set = [empty, i, x, i]
+
+initial_state = (0, [empty])
+
+type Levels = Integer
+type CounterState = (Integer, [[[Integer]]])
+
+playGame :: [[[Integer]]] -> State CounterState (Integer, [[[Integer]]])
+
+playGame [] = do
+    (level, accumm ) <- get
+    return (level, accumm)
+
+playGame (x:xs) = do
+
+    (level, accum ) <- get    
+
+    let xx = sum_figure x (head accum)
+    let level_counter = get_max xx
+    let pile_max = [(pile_figures_max x (head accum) level_counter)]
+    let pile_not_max = [(pile_figures_not_max x (head accum))]
+
+    if level_counter > level then
+        put (level_counter, pile_max)
+    else
+        put (level_counter, pile_not_max)
+   
+    playGame xs
+
+main = print $ evalState (playGame [i, move_figure_left i, move_figure_left i , i, i ]) initial_state
+
+-- main = print "hola"
