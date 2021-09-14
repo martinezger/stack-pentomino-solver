@@ -44,9 +44,9 @@ test_set = [empty, i, x, i]
 initial_state = (2, [test_accum])
 
 type Levels = Integer
-type CounterState = (Integer, [[[Integer]]])
+type CounterState = (Integer, [Poliomino])
 
-playGame :: [[[Integer]]] -> State CounterState (Integer, [[[Integer]]])
+playGame :: [Poliomino] -> State CounterState (Integer, [Poliomino])
 
 playGame [] = do
     (level, accumm ) <- get
@@ -56,21 +56,20 @@ playGame (x:xs) = do
 
     (level, accum ) <- get    
 
-    let xx = sum_figure x (head accum)
-    let level_counter = get_max xx
-    let pile_max = [(pile_figures x (head accum) level_counter)]
+    let sum_x_accum = sum_figures x (head accum)
+    let level_counter = get_max_from sum_x_accum
     
-    let when_lower = sum_sum_figure x (head accum)
-    let when_lower_level = get_max(when_lower)
-    let pile_lower = [(pile_figures x (head accum) when_lower_level)]
+    let pile_higher = [(pile_up_figures x (head accum) level_counter)]
+
+    let when_lower = extract x (head accum)
+    let when_lower_level = get_max_from(when_lower)
+    let pile_lower = [(pile_up_figures x (head accum) when_lower_level)]
 
     if level_counter > level then
-        put (level_counter, pile_max)
+        put (level_counter, pile_higher)
     else
-        put (level_counter, pile_lower)
+        put (level, pile_lower)
    
     playGame xs
 
 main = print $ evalState (playGame [l', f']) initial_state
-
--- main = print "hola"
