@@ -2,6 +2,15 @@ module Lib where
 
 import Data.List
 
+rotate_90 :: [[Integer]] -> [[Integer]]
+rotate_90 = Data.List.transpose . map Data.List.reverse
+
+rotate_180 :: [[Integer]] -> [[Integer]]
+rotate_180 = rotate_90 . rotate_90
+
+rotate_270 :: [[Integer]] -> [[Integer]]
+rotate_270 = rotate_180 . rotate_90
+
 move_row_left :: [Integer] -> [Integer]
 move_row_left [] = []
 move_row_left (x:xs) = xs ++ [0]
@@ -9,7 +18,6 @@ move_row_left (x:xs) = xs ++ [0]
 move_figure_left :: [[Integer]] -> [[Integer]]
 move_figure_left [] =  []
 move_figure_left figure = map (move_row_left)  figure
-
 
 diff_rows :: [Integer] -> [Integer] -> [Integer]
 diff_rows x y = zipWith (-) x y
