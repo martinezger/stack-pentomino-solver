@@ -6,7 +6,7 @@ Given a grid of n x n, pile up m pentominoes of 1x1x1 and return the higher leve
 In the figure below it is a sample of a grid of 5 x 5 with 3 pentominoes and a higher stack of 3.
 ![Stack of Pentominoes](./pento_stack_sample_5_x_5.png)
 
-### Step to Run
+### Steps to Run
 
 1. Install Stack following [this guide](https://docs.haskellstack.org/en/stable/README/).
 2. Once stack is installed in the command line run the following commands to build the app
