@@ -20,7 +20,7 @@ In the figure below it is a sample of a grid of 5 x 5 with 3 pentominoes and a h
 ```
 This will return a tuple where the first element is the higher stack and the second element is the stack of figures represented by an accumulator matrix.  
 ```
-(3,[[[0,0,0,3,2],[0,0,3,3,3],[1,0,0,3,2],[1,0,0,0,2],[0,0,0,1,2]]])
+(3,[[[0,0,0,3,2],[0,0,3,3,3],[0,0,0,3,2],[0,0,0,0,2],[0,0,0,1,2]]])
 ```
 The combination use for the example are the same as the image above.
 
