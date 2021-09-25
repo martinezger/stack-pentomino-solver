@@ -1,7 +1,7 @@
 # stack-pentomino-solver
 This haskell application return the higher stack when you pile up pentominoes in a grid of n x n.
 #### Problem
-Given a grid of n x n, pile up m pentominoes of 1x1x1 and return the higher level get it.
+Given a grid of n x n, pile up m pentominoes, every pentomino is a set of cubes of 1x1x1, and return the higher level get it.
 #### Example
 In the figure below it is a sample of a grid of 5 x 5 with 3 pentominoes and a higher stack of 3.
 ![Stack of Pentominoes](./pento_stack_sample_5_x_5.png)
